@@ -20,5 +20,6 @@ def set_env():
 
         # [SECRET]
         os.environ.setdefault('SECRET_KEY', config.get('SECRET', 'SECRET_KEY'))
+        return False
     except Exception as e:
         return e

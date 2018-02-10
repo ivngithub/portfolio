@@ -1,0 +1,38 @@
+# Expires map
+map $sent_http_content_type $expires {
+    default                    off;
+    text/html                  epoch;
+    text/css                   24h;
+    application/javascript     24h;
+    application/font-woff      90d;
+    ~image/                    1w;
+}
+
+server {
+    listen       80;
+    server_name  domain.name;
+
+     location / {
+        proxy_pass http://127.0.0.1:8001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /static {
+        alias /home/ivn/web/portfolio/portfolio/portfolio/static/;
+    }
+    location /media {
+        autoindex on;
+        alias /home/ivn/web/portfolio/portfolio/portfolio/media/;
+    }
+    location /robots.txt {
+        alias /home/ivn/web/portfolio/robots.txt;
+    }
+    location /favicon.ico {
+        alias /home/ivn/web/portfolio/front/favicon.ico;
+    }
+
+    expires $expires;
+}
+

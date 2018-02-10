@@ -1,11 +1,10 @@
 from __future__ import absolute_import, unicode_literals
-from .env import set_env
-
+import os
 from .base import *
 
 DEBUG = False
 
-set_env()
+SECRET_KEY = os.environ.get('SECRET_KEY', 'asdko_UYIUnm_1231_ADSd=-8!sss'),
 
 try:
     from .local import *

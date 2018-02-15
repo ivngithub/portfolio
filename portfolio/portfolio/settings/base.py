@@ -28,6 +28,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 INSTALLED_APPS = [
     'home',
     'search',
+    'slider',
 
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
@@ -144,3 +145,40 @@ WAGTAIL_SITE_NAME = "portfolio"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+        },
+    },
+    'handlers': {
+        'default': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, os.path.join('log', 'django.log')),
+            'formatter': 'standard',
+            'when': 'midnight',
+            'backupCount': '30',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'email_backend': 'post_office.EmailBackend',
+        },
+    },
+
+    'loggers': {
+        'django.request': {
+            'handlers': ['default'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
+        # 'notice': {
+        #     'handlers': ['default'],
+        #     'level': 'DEBUG'
+        # },
+    }
+}

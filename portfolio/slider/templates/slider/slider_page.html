@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %} template-sliderpage {% endblock %}
+
+{% block content %}
+    {% if page.slider_items %}
+        <div class="slider fullscreen">
+            <ul class="slides">
+                {% for slider_item in page.slider_items.all %}
+                    <li>
+                        {% image slider_item.image width-1200 as imageslider %}
+                        <img src="{{ imageslider.url }}"/>
+                        <div class="caption center-align">
+                            <h3>{{ slider_item.slide_title }}</h3>
+                            <a href="{{ slider_item.link }}"><h5 class="light grey-text text-lighten-3">{{ slider_item.slide_description }}</h5></a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+{% endblock %}

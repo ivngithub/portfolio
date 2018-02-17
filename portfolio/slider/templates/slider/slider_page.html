@@ -12,9 +12,9 @@
                     <li>
                         {% image slider_item.image width-1200 as imageslider %}
                         <img src="{{ imageslider.url }}"/>
-                        <div class="caption center-align">
-                            <h3>{{ slider_item.slide_title }}</h3>
-                            <a href="{{ slider_item.link }}"><h5 class="light grey-text text-lighten-3">{{ slider_item.slide_description }}</h5></a>
+                        <div class="caption {{ slider_item.align }}">
+                            <h3 class="{{ slider_item.slide_title_color }}">{{ slider_item.slide_title }}</h3>
+                            <a href="{{ slider_item.link }}"><h5 class="light {{ slider_item.slide_description_color }} text-lighten-3">{{ slider_item.slide_description }}</h5></a>
                         </div>
                     </li>
                 {% endfor %}

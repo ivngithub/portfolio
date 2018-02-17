@@ -3,8 +3,10 @@ from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, PageChooserPanel
+from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from modelcluster.fields import ParentalKey
+from design.models import COLOR_TEXT_SMALL, ALIGN
 
 
 class SliderPage(Page):
@@ -22,11 +24,21 @@ class LinkFields(models.Model):
         max_length=128,
         help_text=_("Title to slide may be maximum 128 characters")
     )
+    slide_title_color = models.CharField(verbose_name=_('Text color'),
+                                         max_length=32,
+                                         help_text=_("You can choose text color. default is white"),
+                                         choices=((el, COLOR_TEXT_SMALL[el]) for el in COLOR_TEXT_SMALL),
+                                         default=COLOR_TEXT_SMALL['white'])
     slide_description = models.CharField(
         verbose_name=_('Description to slide'),
         max_length=128,
         help_text=_("Description to slide may be maximum 128 characters")
     )
+    slide_description_color = models.CharField(verbose_name=_('Text color'),
+                                               max_length=32,
+                                               help_text=_("You can choose text color. default is white"),
+                                               choices=((el, COLOR_TEXT_SMALL[el]) for el in COLOR_TEXT_SMALL),
+                                               default=COLOR_TEXT_SMALL['white'])
     link_external = models.URLField("URL", blank=True)
     link_page = models.ForeignKey(
         'wagtailcore.Page',
@@ -34,6 +46,11 @@ class LinkFields(models.Model):
         blank=True,
         related_name='+'
     )
+    align = models.CharField(verbose_name=_('Direction for the text box'),
+                             max_length=32,
+                             help_text=_("You can choose direction for the text box. default is left"),
+                             choices=((el, ALIGN[el]) for el in ALIGN),
+                             default=ALIGN['center'])
 
     @property
     def link(self):
@@ -44,9 +61,12 @@ class LinkFields(models.Model):
 
     panels = [
         FieldPanel('slide_title'),
+        FieldPanel('slide_title_color'),
         FieldPanel('slide_description'),
+        FieldPanel('slide_description_color'),
         FieldPanel('link_external'),
         PageChooserPanel('link_page'),
+        FieldPanel('align'),
     ]
 
     class Meta:

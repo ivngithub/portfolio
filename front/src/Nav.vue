@@ -4,17 +4,13 @@
       <li>
         <div class="user-view">
           <div class="background">
-            <img src="images/office.jpg">
+
           </div>
-          <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-          <a href="#!name"><span class="white-text name">John Doe</span></a>
-          <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
         </div></li>
-      <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-      <li><a href="#!">Second Link</a></li>
+      <li><a href="#!"><i class="material-icons">cloud</i>ivan minin</a></li>
       <li><div class="divider"></div></li>
-      <li><a class="subheader">Subheader</a></li>
-      <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+      <li><h4 class="h4-p">projects:</h4></li>
+      <li><a class="waves-effect" href="/slider" target="_parent">Slider</a></li>
     </ul>
     <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
   </div>
@@ -25,5 +21,8 @@
 </script>
 
 <style>
-
+  .h4-p {
+    padding: 32px 0 0 32px;
+    font-weight: 600;
+  }
 </style>

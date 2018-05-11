@@ -6,7 +6,8 @@ WORKDIR /app
 COPY app /app
 COPY cmd.sh /
 
-EXPOSE 80 9191
+EXPOSE 5000 9191
+
 USER uwsgi
 
 CMD ["/cmd.sh"]

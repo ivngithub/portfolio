@@ -38,6 +38,16 @@
           <h4 class="center-align hide-on-med-and-up">{{ git }}</h4>
         </div>
       </div>
+      <div class="row">
+        <div class="col s12 m4">
+          <h4 class="right-align hide-on-small-only">docker:</h4>
+          <h4 class="center-align hide-on-med-and-up">docker:</h4>
+        </div>
+        <div class="col s12 m8">
+          <h4 class="left-align hide-on-small-only">{{ docker }}</h4>
+          <h4 class="center-align hide-on-med-and-up">{{ docker }}</h4>
+        </div>
+      </div>
     </main>
     <footer>
 
@@ -52,7 +62,8 @@ export default {
     return {message: 'portfolio:'.toUpperCase(),
             mail: 'ivn@li.ru',
             skype: 'ivnminin',
-            git: 'github.com/ivngithub'
+            git: 'github.com/ivngithub',
+            docker: 'hub.docker.com/u/ivndocker/'
     }
   }
 }

@@ -11,6 +11,7 @@
       <li><div class="divider"></div></li>
       <li><h4 class="h4-p">projects:</h4></li>
       <li><a class="waves-effect" href="/slider" target="_parent">Slider</a></li>
+      <li><div class="divider"></div></li>
       <li><a class="waves-effect waves-teal btn-flat" href="http://microprojects.ivn.website" target="_parent">microprojects</a></li>
     </ul>
     <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>

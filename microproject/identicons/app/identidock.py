@@ -1,4 +1,4 @@
-from flask import Flask, Response, request
+from flask import Flask, Response, render_template, request
 import requests
 import hashlib
 import redis
@@ -10,7 +10,12 @@ salt = 'Unique_salt'
 default_name = 'ivn'
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+def main():
+
+    return render_template('base.html')
+
+@app.route('/temp', methods=['GET', 'POST'])
 def mainpage():
 
     name = default_name
@@ -46,4 +51,5 @@ def get_identicon(name):
 
 
 if __name__ == '__main__':
+    # app.run(debug=True, host='0.0.0.0', port=8001)
     app.run(debug=True, host='0.0.0.0', port=5000)

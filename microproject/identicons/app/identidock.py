@@ -26,6 +26,7 @@ def you_are():
     hdrs_dict = request.headers.__dict__
     headers = request.headers
     ip = request.headers.get('X-Real-IP')
+    list_ip = request.headers.get('HTTP_X_FORWARDED_FOR')
 
     return render_template('you_are.html', context=locals())
 

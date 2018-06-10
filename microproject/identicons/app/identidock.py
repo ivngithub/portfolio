@@ -13,7 +13,22 @@ default_name = 'ivn'
 @app.route('/')
 def main():
 
-    return render_template('base.html')
+    return render_template('index.html')
+
+
+@app.route('/you-are')
+def you_are():
+
+    ip_address = request.remote_addr
+    user_agent = request.user_agent
+    req = dir(request)
+    hdrs = dir(request.headers)
+    hdrs_dict = request.headers.__dict__
+    headers = request.headers
+    ip = request.headers.get('X-Real-IP')
+
+    return render_template('you_are.html', context=locals())
+
 
 @app.route('/temp', methods=['GET', 'POST'])
 def mainpage():

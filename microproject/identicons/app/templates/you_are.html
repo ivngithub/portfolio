@@ -1,15 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-  <p>You are {{ context.ip_address }} {{ context.user_agent }}!</p>
-  <br>
-  <br>
-  <p>ip: {{ context.ip }}</p>
-  <p>list_ip: {{ context.list_ip }}</p>
-  <p>{{ context.req }}</p>
-  <br>
-  <p>{{ context.hdrs }}</p>
-  <br>
-  <p>{{ context.hdrs_dict }}</p>
-  <br>
-  <p>{{ context.headers }}</p>
+  <div class="grid-x grid-padding-x">
+    <div class="cell large-1 small-1 medium-1"></div>
+    <div class="cell large-11 small-11 medium-11">
+      <h3 style="padding-top: 20px">Hello my friend. The picture which is below are you!</h3>
+      <img src="/monster/{{ context.user_hash }}" style="margin-top: 50px; margin-bottom: 50px"/>
+      <h3>Smile please!</h3>
+    </div>
+  </div>
 {% endblock %}

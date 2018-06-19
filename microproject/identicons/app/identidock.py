@@ -2,7 +2,7 @@ from flask import Flask, Response, render_template, request
 import requests
 import hashlib
 import redis
-
+import psycopg2
 
 app = Flask(__name__)
 cache = redis.StrictRedis(host='redis', port=6379, db=0)
@@ -12,21 +12,18 @@ default_name = 'ivn'
 
 @app.route('/')
 def main():
+    conn = psycopg2.connect(database="pgdb", user="pguser", password="pguser", host="dbpostgres", port="5432")
 
-    return render_template('index.html')
+    return render_template('index.html', context=locals())
 
 
 @app.route('/you-are')
 def you_are():
 
-    ip_address = request.remote_addr
-    user_agent = request.user_agent
-    req = dir(request)
-    hdrs = dir(request.headers)
-    hdrs_dict = request.headers.__dict__
-    headers = request.headers
-    ip = request.headers.get('X-Real-IP')
-    list_ip = request.headers.getlist('X-Forwarded-For')
+    ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    user_agent = request.user_agent.string
+    user_identification = ip_address + user_agent
+    user_hash = hashlib.sha256(user_identification.encode()).hexdigest()
 
     return render_template('you_are.html', context=locals())
 

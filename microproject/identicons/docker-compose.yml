@@ -1,17 +1,36 @@
-identidock:
-  build: . 
-  ports:
-   - "5000:5000"
-  environment:
-    ENV: PROD
-  volumes:
-    - ./app:/app
-  links:
-    - dnmonster
-    - redis
+version: '2'
 
-dnmonster:
-  image: amouat/dnmonster:1.0
+services:
+  identidock:
+    build: .
+    ports:
+     - "8001:5000"
+    environment:
+      ENV: DEV
+    volumes:
+      - ./app:/app
+    links:
+      - dnmonster
+      - redis
+      - dbpostgres
 
-redis:
-  image: redis:3.0
+  dnmonster:
+    image: amouat/dnmonster:1.0
+
+  redis:
+    image: redis:3.0
+
+  dbpostgres:
+    image: postgres
+    volumes:
+      - /home/ivn/pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pguser
+      POSTGRES_DB: pgdb
+
+#volumes:
+#  data:
+#   external: true

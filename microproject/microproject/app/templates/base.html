@@ -1,0 +1,51 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation for Sites</title>
+    <link rel="stylesheet" href="../static/css/foundation.css">
+    <link rel="stylesheet" href="../static/css/app.css">
+  </head>
+  <body>
+
+      <div class="off-canvas position-left reveal-for-large" id="my-info" data-off-canvas>
+        <div class="grid-y grid-padding-x" style="height: 100%;">
+          <br>
+          <!--<div class="cell shrink">-->
+            <!--<img class="thumbnail" src="https://placehold.it/550x350">-->
+          <!--</div>-->
+          <div class="cell auto">
+            <h5>Microprojects</h5>
+            <p>This project is deployed on microframework Flask as backend and framework ZURB Foundation as frontend.</p>
+            <p>Here you can find different solutions for small tasks.</p>
+            <hr>
+            <h3>works:</h3>
+            <a class="clear button" href="http://ivn.website">Main</a>
+            <a class="clear button" href="#">You are</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="off-canvas-content" data-off-canvas-content>
+        <div class="title-bar hide-for-large">
+          <div class="title-bar-left">
+            <button class="menu-icon" type="button" data-toggle="my-info"></button>
+            <span class="title-bar-title">Microprojects</span>
+          </div>
+        </div>
+
+        {% block content %}
+
+        {% endblock %}
+
+      </div>
+
+
+    <script src="../static/js/vendor/jquery.js"></script>
+    <script src="../static/js/vendor/what-input.js"></script>
+    <script src="../static/js/vendor/foundation.js"></script>
+    <script src="../static/js/app.js"></script>
+  </body>
+</html>

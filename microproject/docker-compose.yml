@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  microproject:
+    build: .
+    ports:
+     - "8001:5000"
+    environment:
+      FLASK_APP: microproject.py
+    volumes:
+      - ./microproject:/microproject
+    links:
+      - dnmonster
+      - redis
+      - dbpostgres
+
+  dnmonster:
+    image: amouat/dnmonster:1.0
+
+  redis:
+    image: redis:3.0
+
+  dbpostgres:
+    image: postgres
+    volumes:
+      - /home/ivn/pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pguser
+      POSTGRES_DB: pgdb
+
+#volumes:
+#  data:
+#   external: true

@@ -4,12 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foundation for Sites</title>
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>Microproject</title>
+    {% endif %}
     <link rel="stylesheet" href="../static/css/foundation.css">
     <link rel="stylesheet" href="../static/css/app.css">
   </head>
   <body>
-
       <div class="off-canvas position-left reveal-for-large" id="my-info" data-off-canvas>
         <div class="grid-y grid-padding-x" style="height: 100%;">
           <br>
@@ -21,9 +24,15 @@
             <p>This project is deployed on microframework Flask as backend and framework ZURB Foundation as frontend.</p>
             <p>Here you can find different solutions for small tasks.</p>
             <hr>
-            <h3>works:</h3>
-            <a class="clear button" href="http://ivn.website">Main</a>
-            <a class="clear button" href="#">You are</a>
+            <h5>navigation:</h5>
+            <a class="clear button" href="{{ url_for('index') }}">Home</a>
+            <a class="clear button" href="{{ url_for('microproject_settings') }}">Settings</a>
+            <a class="clear button" href="{{ url_for('login') }}">Login</a>
+            <hr>
+            <h5>works:</h5>
+            <a class="clear button" href="{{ url_for('you_are') }}">You are</a>
+            <hr>
+            <h3><a class="clear button" href="http://ivn.website">PORTFOLIO</a></h3>
           </div>
         </div>
       </div>
@@ -35,6 +44,16 @@
             <span class="title-bar-title">Microprojects</span>
           </div>
         </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
 
         {% block content %}
 

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <article class="grid-container fluid" style="margin: 100px 0">
+        <div class="grid-x grid-margin-x">
+            <div class="cell medium-4 medium-offset-4">
+                <h1>Sign In</h1>
+                <form action="" method="post" novalidate>
+                    <label>
+                        {{ form.username.label }}
+                        {{ form.username(size=32, placeholder="Username", autocomplete='off') }}
+                    </label>
+                    <label>
+                        {{ form.password.label }}
+                        {{ form.password(size=32, placeholder="Password") }}
+                    </label>
+                    <label>
+                        {{ form.remember_me.label }}
+                        {{ form.remember_me() }}
+                    </label>
+                {{ form.submit() }}
+                </form>
+            </div>
+        </div>
+    </article>
+{% endblock %}

@@ -1,17 +1,28 @@
-from flask import Response, render_template, request
+from flask import Response, render_template, request, flash, redirect, url_for
 import requests
 import hashlib
 import redis
 import psycopg2
 from app import app
+from app.forms import LoginForm
 
 
 cache = redis.StrictRedis(host='redis', port=6379, db=0)
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data))
+        return redirect(url_for('index'))
+    return render_template('login.html', title='Sign In', form=form)
+
+
 @app.route('/')
 @app.route('/index')
-def main():
+def index():
     conn = psycopg2.connect(database="pgdb", user="pguser", password="pguser", host="dbpostgres", port="5432")
 
     return render_template('index.html', context=locals())

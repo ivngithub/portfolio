@@ -4,15 +4,24 @@
     <article class="grid-container fluid" style="margin: 100px 0">
         <div class="grid-x grid-margin-x">
             <div class="cell medium-4 medium-offset-4">
+
                 <h1>Sign In</h1>
                 <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
                     <label>
                         {{ form.username.label }}
                         {{ form.username(size=32, placeholder="Username", autocomplete='off') }}
+                        {% for error in form.username.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </label>
+
                     <label>
                         {{ form.password.label }}
                         {{ form.password(size=32, placeholder="Password") }}
+                        {% for error in form.password.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </label>
                     <label>
                         {{ form.remember_me.label }}

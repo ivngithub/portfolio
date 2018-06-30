@@ -27,7 +27,12 @@
             <h5>navigation:</h5>
             <a class="clear button" href="{{ url_for('index') }}">Home</a>
             <a class="clear button" href="{{ url_for('microproject_settings') }}">Settings</a>
-            <a class="clear button" href="{{ url_for('login') }}">Login</a>
+            {% if current_user.is_anonymous %}
+                <a class="clear button" href="{{ url_for('login') }}">Login</a>
+            {% else %}
+                <a class="clear button" href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+            <p>New User? <a class="clear button" href="{{ url_for('register') }}">Click to Register!</a></p>
             <hr>
             <h5>works:</h5>
             <a class="clear button" href="{{ url_for('you_are') }}">You are</a>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <article class="grid-container fluid" style="margin: 100px 0">
+        <div class="grid-x grid-margin-x">
+            <div class="cell medium-4 medium-offset-4">
+                <h1>Edit Profile</h1>
+                <form action="" method="post">
+                    {{ form.hidden_tag() }}
+                    <label>
+                        {{ form.username.label }}
+                        {{ form.username(size=32, placeholder="Username", autocomplete='off') }}
+                        {% for error in form.username.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </label>
+                    <label>
+                        {{ form.about_me.label }}
+                        {{ form.about_me(cols=50, rows=4, placeholder="About_me") }}
+                        {% for error in form.about_me.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </label>
+                    {{ form.submit() }}
+                </form>
+            </div>
+        </div>
+    </article>
+{% endblock %}

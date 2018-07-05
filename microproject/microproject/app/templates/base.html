@@ -24,12 +24,13 @@
             <p>This project is deployed on microframework Flask as backend and framework ZURB Foundation as frontend.</p>
             <p>Here you can find different solutions for small tasks.</p>
             <hr>
-            <h5>navigation:</h5>
+            <h3>navigation:</h3>
             <a class="clear button" href="{{ url_for('index') }}">Home</a>
             <a class="clear button" href="{{ url_for('microproject_settings') }}">Settings</a>
             {% if current_user.is_anonymous %}
                 <a class="clear button" href="{{ url_for('login') }}">Login</a>
             {% else %}
+                <a class="clear button" href="{{ url_for('user', username=current_user.username) }}">Account</a>
                 <a class="clear button" href="{{ url_for('logout') }}">Logout</a>
             {% endif %}
             <p>New User? <a class="clear button" href="{{ url_for('register') }}">Click to Register!</a></p>
@@ -59,11 +60,13 @@
             </ul>
             {% endif %}
         {% endwith %}
+        <article class="grid-container fluid">
 
-        {% block content %}
+                {% block content %}
 
-        {% endblock %}
+                {% endblock %}
 
+        </article>
       </div>
 
 

@@ -7,7 +7,7 @@ services:
      - "8001:5000"
     environment:
       FLASK_APP: microproject.py
-      FLASK_DEBUG: 'True'
+      #FLASK_DEBUG: 'True'
     volumes:
       - ./microproject:/microproject
     links:

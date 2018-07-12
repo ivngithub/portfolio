@@ -8,6 +8,8 @@
             <h3>Hello {{ user.username }}! This is your personal account.</h3>
             <p>Use for your own purposes.</p>
             {% if user.last_seen %}<p style="font-size: small; color: grey"><i>last seen on: {{ user.last_seen }}</i></p>{% endif %}
+
+            <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
         </div>
     </div>
     <div class="grid-x grid-margin-x" style="margin-top: 10px">

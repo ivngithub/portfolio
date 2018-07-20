@@ -9,8 +9,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, FeedbackForm
+from app.models import User, Feedback
 
 
 cache = redis.StrictRedis(host='redis', port=6379, db=0)
@@ -23,40 +23,67 @@ def before_request():
         db.session.commit()
 
 
-@app.route('/')
-@app.route('/index')
-def index():
-    conn = psycopg2.connect(database="pgdb", user="pguser", password="pguser", host="dbpostgres", port="5432")
-
-    return render_template('index.html', context=locals())
-
-
-@app.route('/you-are')
-def you_are():
-    ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-    user_agent = request.user_agent.string
-    user_identification = ip_address + user_agent
-    user_hash = hashlib.sha256(user_identification.encode()).hexdigest()
-
-    return render_template('you_are.html', context=locals())
+# This code is need me
+# @app.route('/')
+# @app.route('/index')
+# def index():
+#     conn = psycopg2.connect(database="pgdb", user="pguser", password="pguser", host="dbpostgres", port="5432")
+#
+#     return render_template('index.html', context=locals())
 
 
-@app.route('/microproject-settings')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
-def microproject_settings():
-    return render_template('microproject_settings.html', context=locals())
+def index():
+    form = FeedbackForm()
+    if form.validate_on_submit():
+        feedback = Feedback(body=form.feedback.data, author=current_user)
+        db.session.add(feedback)
+        db.session.commit()
+        flash('Your post is now live!')
+        return redirect(url_for('index'))
+    page = request.args.get('page', 1, type=int)
+    few_feedback = current_user.followed_few_feedback().paginate(page, app.config['POSTS_PER_PAGE'], False)
+    return render_template('index.html', title='Home', form=form, few_feedback=few_feedback)
 
 
-@app.route('/monster/<name>')
-def get_identicon(name):
-    image = cache.get(name)
-    if image is None:
-        print('Cache is miss')
-        r = requests.get('http://dnmonster:8080/monster/' + name + '?size=160')
-        image = r.content
-        cache.set(name, image)
+@app.route('/explore')
+@login_required
+def explore():
+    page = request.args.get('page', 1, type=int)
+    few_feedback = Feedback.query.order_by(Feedback.timestamp.desc()).paginate(page,
+                                                                               app.config['POSTS_PER_PAGE'], False)
+    return render_template("index.html", title='Explore', few_feedback=few_feedback)
 
-    return Response(image, mimetype='image/png')
+
+# This code is need me
+# @app.route('/you-are')
+# def you_are():
+#     ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+#     user_agent = request.user_agent.string
+#     user_identification = ip_address + user_agent
+#     user_hash = hashlib.sha256(user_identification.encode()).hexdigest()
+#
+#     return render_template('you_are.html', context=locals())
+#
+#
+# @app.route('/microproject-settings')
+# @login_required
+# def microproject_settings():
+#     return render_template('microproject_settings.html', context=locals())
+#
+#
+# @app.route('/monster/<name>')
+# def get_identicon(name):
+#     image = cache.get(name)
+#     if image is None:
+#         print('Cache is miss')
+#         r = requests.get('http://dnmonster:8080/monster/' + name + '?size=160')
+#         image = r.content
+#         cache.set(name, image)
+#
+#     return Response(image, mimetype='image/png')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -111,12 +138,14 @@ def user(username):
 
 @app.route('/avatar/<name>')
 def get_avatar(name):
-    image = cache.get(name)
+    size = request.args.get('size')
+    cache_str = name + size
+    image = cache.get(cache_str)
     if image is None:
         print('Cache is miss')
-        r = requests.get('http://dnmonster:8080/monster/123?size=160')
+        r = requests.get('http://dnmonster:8080/monster/{}?size={}'.format(name, size))
         image = r.content
-        cache.set(name, image)
+        cache.set(cache_str, image)
 
     return Response(image, mimetype='image/png')
 
@@ -136,6 +165,7 @@ def edit_profile():
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
 
+
 @app.route('/follow/<username>')
 @login_required
 def follow(username):
@@ -150,6 +180,7 @@ def follow(username):
     db.session.commit()
     flash('You are following {}!'.format(username))
     return redirect(url_for('user', username=username))
+
 
 @app.route('/unfollow/<username>')
 @login_required

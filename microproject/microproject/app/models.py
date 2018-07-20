@@ -34,9 +34,8 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    @property
-    def user_hash_for_avatar(self):
-        return hashlib.sha256(self.email.encode()).hexdigest()
+    def user_hash_for_avatar(self, size):
+        return hashlib.sha256(self.email.encode()).hexdigest() + '?size={}'.format(size)
 
     def follow(self, user):
         if not self.is_following(user):

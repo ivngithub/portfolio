@@ -1,0 +1,19 @@
+{% import '_macros.html' as macros%}
+<div class="grid-x grid-padding-x">
+    <div class="cell small-10 small-offset-1">
+        <h3>All feedback:</h3>
+        <hr>
+        {% for feedback in few_feedback.items %}
+            <div class="media-object callout">
+                <div class="media-object-section">
+                    <img class="thumbnail" src="/avatar/{{feedback.author.user_hash_for_avatar(72)}}" alt="{{ feedback.author.username }}">
+                </div>
+                <div class="media-object-section">
+                    <h4><a href="{{ url_for('user', username=feedback.author.username) }}">{{ feedback.author.username }}</a> says:</h4>
+                    <p>{{ feedback.body }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {{ macros.render_pagination(few_feedback, '.index')  }}
+    </div>
+</div>
